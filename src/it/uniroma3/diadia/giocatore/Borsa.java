@@ -1,5 +1,6 @@
 package it.uniroma3.diadia.giocatore;
 import it.uniroma3.diadia.ambienti.*;
+
 import it.uniroma3.diadia.attrezzi.*;
 import it.uniroma3.diadia.*;
 
@@ -92,7 +93,7 @@ public class Borsa {
 		StringBuilder s = new StringBuilder();
 
 		if (!this.isEmpty()) {
-			s.append("Contenuto borsa ("+this.getPeso()+"kg/"+this.getPesoMax()+"kg): ");
+			s.append("Contenuto borsa: ("+this.getPeso()+"kg/"+this.getPesoMax()+"kg): ");
 			for (int i= 0; i<this.numeroAttrezzi; i++)
 				s.append(attrezzi[i].toString()+" ");
 		}

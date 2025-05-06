@@ -5,45 +5,33 @@ import it.uniroma3.diadia.*;
 import it.uniroma3.diadia.attrezzi.*;
 import it.uniroma3.diadia.giocatore.*;
 
-/**
- * Classe Stanza - una stanza in un gioco di ruolo.
- * Una stanza e' un luogo fisico nel gioco.
- * E' collegata ad altre stanze attraverso delle uscite.
- * Ogni uscita e' associata ad una direzione.
- * 
- * @author docente di POO 
- * @see Attrezzo
- * @version base
-*/
 
-public class Stanza {
+public class StanzaProtected {
 	
-	static final private int NUMERO_MASSIMO_DIREZIONI = 4;
-	static final private int NUMERO_MASSIMO_ATTREZZI = 10;
+	static final protected int NUMERO_MASSIMO_DIREZIONI = 4;
+	static final protected int NUMERO_MASSIMO_ATTREZZI = 10;
 	
-	private String nome;
+	protected String nome;
 	
-    private Attrezzo[] attrezzi;
-    private int numeroAttrezzi;
+    protected Attrezzo[] attrezzi;
+    protected int numeroAttrezzi;
     
-    private Stanza[] stanzeAdiacenti;
-    private int numeroStanzeAdiacenti;
+    protected Stanza[] stanzeAdiacenti;
+    protected int numeroStanzeAdiacenti;
     
-	private String[] direzioni;
-	private IO stampe;
+	protected String[] direzioni;
     
     /**
      * Crea una stanza. Non ci sono stanze adiacenti, non ci sono attrezzi.
      * @param nome il nome della stanza
      */
-    public Stanza(String nome) {
+    public StanzaProtected(String nome) {
         this.nome = nome;
         this.numeroStanzeAdiacenti = 0;
         this.numeroAttrezzi = 0;
         this.direzioni = new String[NUMERO_MASSIMO_DIREZIONI];
         this.stanzeAdiacenti = new Stanza[NUMERO_MASSIMO_DIREZIONI];
         this.attrezzi = new Attrezzo[NUMERO_MASSIMO_ATTREZZI];
-        this.stampe = new IOConsole();
     }
 
     /**
@@ -76,9 +64,6 @@ public class Stanza {
 		for(int i=0; i<this.numeroStanzeAdiacenti; i++)
         	if (this.direzioni[i].equals(direzione))
         		stanza = this.stanzeAdiacenti[i];
-		if(stanza == null) {
-			stampe.mostraMessaggio("Direzione inesistente!");
-		}
         return stanza;
 	}
 

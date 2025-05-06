@@ -26,4 +26,11 @@ public class Giocatore {
 		return this.borsa;
 	}
 	
+	public String toString() {
+		StringBuilder s = new StringBuilder();
+		
+		s.append("Attualmente hai a disposizione: " +this.cfu + " CFU.\n" +this.borsa.toString());
+		return s.toString();
+	}
+	
 }
