@@ -1,39 +1,32 @@
 package it.uniroma3.diadia.ambienti;
-import it.uniroma3.diadia.*;
-import it.uniroma3.diadia.attrezzi.*;
-import it.uniroma3.diadia.giocatore.*;
 
+public class StanzaBloccata extends Stanza {
 
-public class StanzaBloccata extends Stanza{
-	private String nomeAttrezzoUtile;
-	private String dirBloccata;
-	private IO stampe;
-	public StanzaBloccata(String nome) {
+	private Direzione direzioneBloccata;
+	private String attrezzoSbloccante;
+
+	public StanzaBloccata(String nome, Direzione direzioneBloccata, String attrezzoSbloccante) {
 		super(nome);
-		this.stampe = new IOConsole();
-		this.nomeAttrezzoUtile = "passepartout";
-		this.dirBloccata = "est";
+		this.direzioneBloccata = direzioneBloccata;
+		this.attrezzoSbloccante = attrezzoSbloccante;
 	}
-	
+
+
+
 	@Override
-	public Stanza getStanzaAdiacente(String dir) {
-		if(super.getAttrezzo(this.nomeAttrezzoUtile) == null && dir.equals(dirBloccata)){
-			stampe.mostraMessaggio("Direzione bloccata!");
-			return null;				
+	public Stanza getStanzaAdiacente(Direzione direzione) {
+		if(direzioneBloccata.equals(direzione) && !this.hasAttrezzo(attrezzoSbloccante)) {
+			return this;
 		}
-		else {
-			return super.getStanzaAdiacente(dir);
-		}
+		return super.getStanzaAdiacente(direzione);
 	}
-	
-	@Override 
+
+	@Override
 	public String getDescrizione() {
-		if(super.getAttrezzo(this.nomeAttrezzoUtile) == null){
-			stampe.mostraMessaggio(super.getDescrizione());
-			return "La stanza ha la direzione est bloccata!";
-		}
-		else {
-			return super.getDescrizione();
-		}
+		String bloccata = "Stanza bloccata nella direzione: "+ direzioneBloccata+"\nPrendi il " + attrezzoSbloccante + " e posalo nella stanza";
+
+		if(!this.hasAttrezzo(attrezzoSbloccante))
+			return bloccata;
+		return super.getDescrizione();
 	}
 }

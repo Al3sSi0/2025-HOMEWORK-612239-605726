@@ -1,45 +1,33 @@
 package it.uniroma3.diadia.comandi;
-import it.uniroma3.diadia.*;
-import it.uniroma3.diadia.ambienti.*;
-import it.uniroma3.diadia.attrezzi.*;
-import it.uniroma3.diadia.giocatore.*;
 
-public class ComandoPrendi implements Comando{
-	private String nomeAttrezzo;
-	private IO stampe;
-	public ComandoPrendi(String nome) {
-		this.nomeAttrezzo = nome;
-		this.stampe = new IOConsole();
-	}
+import it.uniroma3.diadia.IO;
+import it.uniroma3.diadia.Partita;
+import it.uniroma3.diadia.attrezzi.Attrezzo;
+
+public class ComandoPrendi extends AbstractComando {
+
+	private final static String NOME = "prendi";
+
 	
 	@Override
 	public void esegui(Partita partita) {
-		if(nomeAttrezzo==null) {
-			stampe.mostraMessaggio("Inserisci un attrezzo. Cosa vuoi prendere?");
-			nomeAttrezzo = stampe.leggiRiga();		}
-		if(partita.getGiocatore().getBorsa().addAttrezzo(partita.getLabirinto().getStanzaCorrente().getAttrezzo(nomeAttrezzo))) {
-			stampe.mostraMessaggio("oggetto preso");
-		}
+		Attrezzo a = partita.getLabirinto().getStanzaCorrente().getAttrezzo(this.getParametro());
+		if(a==null) {
+			this.getIo().mostraMessaggio("Attrezzo non presente nella stanza!");
+		} 
 		else {
-			stampe.mostraMessaggio("oggetto non preso");
-		}
-		partita.getLabirinto().getStanzaCorrente().removeAttrezzo(partita.getLabirinto().getStanzaCorrente().getAttrezzo(nomeAttrezzo));
+			if(partita.getGiocatore().getBorsa().getPesoRimanente(a)) {
+				partita.getGiocatore().getBorsa().addAttrezzo(a);
+				partita.getLabirinto().getStanzaCorrente().removeAttrezzo(a);
+			} 
+			else
+				this.getIo().mostraMessaggio("Attrezzo troppo pesante per entrare nella borsa!");
+			}
 	}
-	
+
 	@Override
-	public void setParametro(String parametro) {
-		this.nomeAttrezzo = parametro;
-	}
-	
-	@Override 
-	public String getParametro() {
-		return this.nomeAttrezzo;
-	}
-	
-	@Override 
 	public String getNome() {
-		String s = "prendi";
-		return s;
+		return NOME;
 	}
 
 }

@@ -1,34 +1,18 @@
 package it.uniroma3.diadia.comandi;
-import it.uniroma3.diadia.*;
-import it.uniroma3.diadia.ambienti.*;
-import it.uniroma3.diadia.attrezzi.*;
-import it.uniroma3.diadia.giocatore.*;
 
+import it.uniroma3.diadia.IO;
+import it.uniroma3.diadia.Partita;
 
-public class ComandoNonValido implements Comando{
-	private IO stampe;
-	public ComandoNonValido() {
-		this.stampe = new IOConsole();
-	}
-	
+public class ComandoNonValido extends AbstractComando {
+
+	private final static String NOME = "non valido";
+
 	@Override
 	public void esegui(Partita partita) {
-		stampe.mostraMessaggio("Comando inesistente!");
+		this.getIo().mostraMessaggio("Comando non valido");
 	}
-		
 	@Override
-	public void setParametro(String s) {}
-	
-	@Override 
-	public String getParametro() {
-		String st = "";
-		return st;
-	}
-	
-	@Override 
 	public String getNome() {
-		String s = "comando non valido";
-		return s;
+		return NOME;
 	}
-
 }

@@ -1,36 +1,34 @@
 package it.uniroma3.diadia.giocatore;
-import it.uniroma3.diadia.ambienti.*;
-import it.uniroma3.diadia.attrezzi.*;
-import it.uniroma3.diadia.*;
+
+import it.uniroma3.diadia.Configuratore;
 
 public class Giocatore {
+	static final private int CFU_INIZIALI = Configuratore.getCFU();
+	//static final private int CFU_INIZIALI = 20;
+
 	private int cfu;
 	private Borsa borsa;
-	static final private int CFU_INIZIALI = 20;
-	
-	
+
 	public Giocatore() {
-		cfu = CFU_INIZIALI;
-		borsa = new Borsa();
+		this.cfu = CFU_INIZIALI;
+		this.borsa = new Borsa();
 	}
-	
+
 	public int getCfu() {
 		return this.cfu;
 	}
 
 	public void setCfu(int cfu) {
-		this.cfu = cfu;
+		this.cfu = cfu;		
 	}
-	
+
 	public Borsa getBorsa() {
-		return this.borsa;
+		return borsa;
 	}
+
+	public void setBorsa(Borsa borsa) {
+		this.borsa = borsa;
+	}	
 	
-	public String toString() {
-		StringBuilder s = new StringBuilder();
-		
-		s.append("Attualmente hai a disposizione: " +this.cfu + " CFU.\n" +this.borsa.toString());
-		return s.toString();
-	}
 	
 }
