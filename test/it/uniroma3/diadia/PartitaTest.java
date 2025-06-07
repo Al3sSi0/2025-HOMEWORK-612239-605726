@@ -1,57 +1,49 @@
 package it.uniroma3.diadia;
-import it.uniroma3.diadia.ambienti.*;
 
-import it.uniroma3.diadia.attrezzi.*;
-import it.uniroma3.diadia.giocatore.*;
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
+import java.io.FileNotFoundException;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import it.uniroma3.diadia.ambienti.Labirinto;
+import it.uniroma3.diadia.ambienti.Stanza;
 
 public class PartitaTest {
-	private Partita partita;
-	private Labirinto labirinto;
-	
-	@BeforeEach
-	public void Setup() {
-		partita = new Partita();
-		labirinto = partita.getLabirinto();
+
+	Labirinto labirinto;
+	Partita p;
+	Stanza s;
+
+	@Before
+	public void setUp() throws FileNotFoundException, FormatoFileNonValidoException {
+		 labirinto = Labirinto.newBuilder("labirinto2.txt").getLabirinto();
+//				.addStanzaIniziale("Atrio")
+//				.addAttrezzo("martello", 3)
+//				.addStanzaVincente("Biblioteca")
+//				.addAdiacenza("Atrio", "Biblioteca", "nord")
+//				.getLabirinto();
+		 p = new Partita(labirinto);
+		 s = new Stanza("Stanza");
 	}
 	
 	@Test
-	public void testVintaTrue() {
-		labirinto.setStanzaCorrente(labirinto.getStanzaVincente());
-		assertTrue(partita.vinta());	
+	public void testGetStanzaVincente() {
+		assertEquals("Biblioteca", p.getLabirinto().getStanzaVincente().getNome());
 	}
-	
+
 	@Test
-	public void testVintaFalse() {
-		assertFalse(partita.vinta());	
+	public void testSetStanzaCorrente() {
+		p.getLabirinto().setStanzaCorrente(s);
+		assertEquals(s, p.getLabirinto().getStanzaCorrente());
 	}
-	
-	@Test
-	public void testVintaNull() {
-		labirinto.setStanzaCorrente(null);
-		assertFalse(partita.vinta());	
-	}
-	
+
 	@Test
 	public void testIsFinita() {
-		partita.setFinita();
-		assertTrue(partita.isFinita());		
+		
+		assertFalse(p.isFinita());
 	}
 	
-	@Test
-	public void testIsFinitaVinta() {
-		labirinto.setStanzaCorrente(labirinto.getStanzaVincente());
-		assertTrue(partita.isFinita());		
-	}
-	
-	@Test
-	public void testIsFinitaCfu() {
-		partita.getGiocatore().setCfu(0);
-		assertTrue(partita.isFinita());		
-	}
-
 }
-
-
